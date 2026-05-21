@@ -1,0 +1,113 @@
+# >>> TrainingArguments: about directories
+resume_from_checkpoint: null
+ignore_data_skip: false  # When resuming training, whether to skip the epochs and batches to get the data loading at the same stage as in the previous training.
+run_name: "output_dir"  # A descriptor for the run. Typically used for wandb
+output_dir: "output_dir"
+# overwrite_output_dir: true  # default: False
+
+# >>> TrainingArguments: about the epoch and batch size
+#     save checkpoints per epoch or per `save_steps`, and run evaluation
+num_train_epochs: 3.0  # default: 3.0
+max_steps: -1  # If set to a positive number, the total number of training steps to perform.
+# max_steps: 50
+load_best_model_at_end: false  # Whether or not to load the best model found during training at the end of training. Default: False
+metric_for_best_model: "loss"
+greater_is_better: false
+remove_unused_columns: true
+per_device_train_batch_size: 2  # default: 8
+per_device_eval_batch_size: 2  # default: 8
+gradient_accumulation_steps: 4  # default: 1
+
+# >>> TrainingArguments: about learning rate
+learning_rate: 5.0e-5  # default: 5e-5 (usually 2e-4, or 2e-5 for long training runs)
+# lr_scheduler_type: "linear"  # default: "linear"; "warmup_stable_decay", "inverse_sqrt"
+# lr_scheduler_type: "constant_with_warmup"
+lr_scheduler_type: "warmup_stable_decay"  # aka WSD
+lr_scheduler_kwargs: {num_decay_steps: 0.05}  # The extra arguments for the lr_scheduler.
+# lr_scheduler_kwargs: {num_decay_steps: 100}
+# warmup_ratio: 0.0  # Ratio of total training steps used for a linear warmup from 0 to `learning_rate`.
+warmup_ratio: 0.05
+# warmup_steps: 10  # Number of steps used for a linear warmup from 0 to `learning_rate`. Overrides any effect of `warmup_ratio`.
+warmup_steps: 0
+weight_decay: 0  # default: 0
+# weight_decay: 0.01  # default: 0
+
+# >>> TrainingArguments: about the optimizer
+optim: "adamw_torch"
+# optim: "adamw_8bit"
+# optim_args: null
+adam_beta1: 0.9  # default: 0.9
+adam_beta2: 0.999  # default: 0.999
+adam_epsilon: 1.0e-8  # default: 1e-8
+max_grad_norm: 1.0  # Maximum gradient norm (for gradient clipping). Default: 1.0
+
+# >>> TrainingArguments: about the training precision
+bf16: true  # default: false
+fp16: false  # default: false
+# fp16_opt_level: "01"  # Apex AMP optimization level selected in ['O0', 'O1', 'O2', and 'O3']. Default: "01"
+# fp16_backend: "auto"
+# half_precision_backend: "auto"
+bf16_full_eval: false
+fp16_full_eval: false
+# tf32: true  # Whether to enable the TF32 mode, available in Ampere and newer GPU architectures.
+
+# >>> TrainingArguments: about training/evaluation modes
+debug: ""
+do_train: true  # default: False
+do_eval: false
+eval_strategy: "steps"  # Evaluate the model after each epoch. Default: "no"
+eval_steps: 0.1  # default: 500; 0.1
+eval_on_start: false  # default: False
+do_predict: false
+prediction_loss_only: false
+# jit_mode_eval: false
+batch_eval_metrics: false
+
+# >>> TrainingArguments: about model saving strategies
+save_strategy: "steps"  # Save the checkpoint. "no", "epoch", "steps", "best"
+save_steps: 0.1  # default: 500; 0.1
+save_total_limit: null  # If a value is passed, will limit the total amount of checkpoints
+# save_safetensors: true
+save_on_each_node: false
+save_only_model: false  # When checkpointing, whether to only save the model, or also the optimizer, scheduler & rng state.
+restore_callback_states_from_checkpoint: false
+
+# >>> TrainingArguments: about logs
+logging_strategy: "steps"
+logging_steps: 1  # default: 500
+logging_first_step: true  # default: False
+# logging_dir: null  # TensorBoard log directory. Default: output_dir/runs/**CURRENT_DATETIME_HOSTNAME**
+# logging_nan_inf_filter: true
+report_to: "all"  # default: "all". Other options: "wandb", "none"
+disable_tqdm: true  # Will default to `true` if the logging level is set to warn or lower (default), `false` otherwise.
+log_level: "passive"  # Logger log level to use on the main process.
+log_level_replica: "warning"  # Logger log level to use on replicas.
+log_on_each_node: true
+
+# >>> About model publishing
+push_to_hub: false
+hub_model_id: null
+hub_strategy: "every_save"
+# hub_token: ""  #  Will default to the token in the cache folder obtained with `huggingface-cli login`
+hub_private_repo: true  # Whether to make the repo private. Default: None (public)
+hub_always_push: false
+
+# >>> TrainingArguments: MISC
+seed: 42
+data_seed: 42
+dataloader_drop_last: false
+dataloader_num_workers: 0
+# group_by_length: false
+# past_index: -1
+# label_names: null  # The list of keys in your dictionary of inputs that correspond to the labels.
+label_smoothing_factor: 0.0
+use_cpu: false
+use_liger_kernel: false
+#use_ipex: false
+# fsdp: ""
+# fsdp_config: null
+# local_rank: -1
+# ddp_backend: "nccl"
+# deepspeed: null
+# accelerator_config: null
+# tpu_num_cores: false

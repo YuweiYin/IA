@@ -8,8 +8,9 @@ __pycache__/
 *.so
 *.egg
 *.log
-*backup.json
+backup/
 *_backup/
+*backup.json
 slurm_*
 data/
 ckpt/
@@ -18,3 +19,4 @@ logs/
 wandb/
 figures/
 results/
+#config/

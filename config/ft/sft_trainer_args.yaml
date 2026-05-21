@@ -1,0 +1,23 @@
+# SFT trainer config
+
+# > Parameters that control the model
+model_init_kwargs: null
+chat_template_path: null
+
+# > Parameters that control the data preprocessing
+dataset_text_field: "messages"  # default: "text".  # Note: make sure the data format is correct
+dataset_kwargs: null
+dataset_num_proc: null
+eos_token: null  # default: None
+pad_token: null  # default: None
+max_length: 4096  # If `None`, no truncation is applied. default: 1024
+packing: false  # default: false
+#packing_strategy: "ffd"
+padding_free: false  # default: false
+pad_to_multiple_of: null  # default: null
+eval_packing: null  # Whether to pack the eval dataset. If `None`, uses the same value as `packing`
+
+# > Parameters that control the training
+completion_only_loss: null  # If set to `True`, loss is computed only on the completion
+assistant_only_loss: false  # If set to `True`, loss is computed only on the assistant responses
+activation_offloading: false  # Whether to offload the activations to the CPU.
